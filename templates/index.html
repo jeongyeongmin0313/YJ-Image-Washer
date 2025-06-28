@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YJ Image Washer 1.0</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2em auto; padding: 0 1em; background-color: #f4f4f9; color: #333; }
+        h1 { color: #0056b3; }
+        .upload-form { background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .result { margin-top: 2em; padding: 1em; background: #e2eafc; border-left: 5px solid #0056b3; }
+        a { color: #0056b3; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        input[type="file"] { margin-bottom: 1em; }
+        button { background-color: #0056b3; color: white; padding: 0.7em 1.5em; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
+        button:hover { background-color: #004494; }
+    </style>
+</head>
+<body>
+    <h1>YJ Image Washer 1.0</h1>
+    <div class="upload-form">
+        <p>세탁할 이미지 파일을 선택하세요. (JPG, PNG, GIF)</p>
+        <form action="/wash" method="post" enctype="multipart/form-data">
+            <input type="file" name="image_file" required>
+            <br>
+            <button type="submit">이미지 세탁하기</button>
+        </form>
+    </div>
+
+    {% if washed_image_url %}
+    <div class="result">
+        <h2>세탁 완료!</h2>
+        <p>아래 링크를 클릭해서 세탁된 이미지를 다운로드하세요.</p>
+        <a href="{{ washed_image_url }}" download>다운로드: {{ original_filename }}</a>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="result" style="background: #fde2e2; border-left-color: #b30000;">
+        <h2 style="color: #b30000;">오류 발생</h2>
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>
